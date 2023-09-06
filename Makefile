@@ -76,6 +76,15 @@ gpt4all:
 	git clone --recurse-submodules $(GPT4ALL_REPO) gpt4all
 	cd gpt4all && git checkout -b build $(GPT4ALL_VERSION) && git submodule update --init --recursive --depth 1
 
+backend-assets/gpt4all: gpt4all/gpt4all-bindings/golang/libgpt4all.a
+	mkdir -p backend-assets/gpt4all
+	@cp gpt4all/gpt4all-bindings/golang/buildllm/*.so backend-assets/gpt4all/ || true
+	@cp gpt4all/gpt4all-bindings/golang/buildllm/*.dylib backend-assets/gpt4all/ || true
+	@cp gpt4all/gpt4all-bindings/golang/buildllm/*.dll backend-assets/gpt4all/ || true
+
+gpt4all/gpt4all-bindings/golang/libgpt4all.a: gpt4all
+	$(MAKE) -C gpt4all/gpt4all-bindings/golang/ libgpt4all.a
+
 ## CEREBRAS GPT
 go-ggml-transformers:
 	git clone --recurse-submodules https://github.com/go-skynet/go-ggml-transformers.cpp go-ggml-transformers
