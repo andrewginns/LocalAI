@@ -120,7 +120,7 @@ rebuild: ## Rebuilds the project
 prepare: prepare-sources $(OPTIONAL_TARGETS)
 	touch $@
 
-clean: ## Cleans up all project files
+clean: ## Remove build related file
 	$(GOCMD) clean -cache
 	$(MAKE) -C go-llama clean
 	$(MAKE) -C go-llama-stable clean
