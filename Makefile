@@ -152,6 +152,16 @@ clean: ## Remove build related file
 	rm -rf $(BINARY_NAME)
 	rm -rf release/
 
+## Build:
+
+build: grpcs prepare ## Build the project
+	$(info ${GREEN}I local-ai build info:${RESET})
+	$(info ${GREEN}I BUILD_TYPE: ${YELLOW}$(BUILD_TYPE)${RESET})
+	$(info ${GREEN}I GO_TAGS: ${YELLOW}$(GO_TAGS)${RESET})
+	$(info ${GREEN}I LD_FLAGS: ${YELLOW}$(LD_FLAGS)${RESET})
+
+	CGO_LDFLAGS="$(CGO_LDFLAGS)" $(GOCMD) build -ldflags "$(LD_FLAGS)" -tags "$(GO_TAGS)" -o $(BINARY_NAME) ./
+
 ## Help:
 help: ## Show this help.
 	@echo ''
